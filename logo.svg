@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00592e"/>
+      <stop offset="100%" stop-color="#003d20"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" fill="url(#bg)"/>
+
+  <!-- Wimbledon purple bands -->
+  <rect x="0" y="0" width="512" height="46" fill="#4F2683"/>
+  <rect x="0" y="466" width="512" height="46" fill="#4F2683"/>
+
+  <!-- Cream pinstripes -->
+  <rect x="0" y="46" width="512" height="2.5" fill="#F5F0E1" opacity="0.6"/>
+  <rect x="0" y="463.5" width="512" height="2.5" fill="#F5F0E1" opacity="0.6"/>
+
+  <!-- Center monogram block -->
+  <g transform="translate(256 270)">
+
+    <!-- Decorative laurel-style frame (Wimbledon trophy ring inspired) -->
+    <circle cx="0" cy="0" r="155" fill="none" stroke="#F5F0E1" stroke-width="3" opacity="0.85"/>
+    <circle cx="0" cy="0" r="142" fill="none" stroke="#F5F0E1" stroke-width="1" opacity="0.5"/>
+
+    <!-- Crown / laurel ornaments at 4 cardinal points -->
+    <circle cx="0" cy="-155" r="6" fill="#F5F0E1"/>
+    <circle cx="0" cy="155" r="6" fill="#F5F0E1"/>
+    <circle cx="-155" cy="0" r="6" fill="#F5F0E1"/>
+    <circle cx="155" cy="0" r="6" fill="#F5F0E1"/>
+
+    <!-- Tennis ball above letters (small accent) -->
+    <g transform="translate(0 -90)">
+      <circle r="22" fill="#FFEB3B"/>
+      <circle r="22" fill="none" stroke="#003d20" stroke-width="2"/>
+      <path d="M -22 0 Q 0 -13 22 0" fill="none" stroke="#003d20" stroke-width="2.5"/>
+      <path d="M -22 0 Q 0 13 22 0" fill="none" stroke="#003d20" stroke-width="2.5"/>
+    </g>
+
+    <!-- Large serif HL monogram -->
+    <text x="0" y="55" text-anchor="middle"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="160" font-weight="700"
+          fill="#F5F0E1">HL</text>
+
+    <!-- Small "EST. 2026" below -->
+    <text x="0" y="105" text-anchor="middle"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="18" font-weight="600"
+          fill="#F5F0E1" letter-spacing="6" opacity="0.8">EST · 2026</text>
+  </g>
+
+  <!-- Bottom band text -->
+  <text x="256" y="498" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="22" font-weight="700"
+        fill="#F5F0E1" letter-spacing="6">TENNIS</text>
+
+  <!-- Top band text -->
+  <text x="256" y="32" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="22" font-weight="700"
+        fill="#F5F0E1" letter-spacing="6">TRAINING</text>
+</svg>
