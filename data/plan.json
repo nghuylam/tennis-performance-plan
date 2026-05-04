@@ -1,0 +1,190 @@
+{
+  "_comment": "Weekly plan structure. dayOfWeek: 1=Monday, 7=Sunday. Each session has blocks, each block has list of exercise IDs from exercises.json. To swap an exercise, change its ID here. To add new session, add to sessions and update schedule.",
+
+  "schedule": {
+    "1": "gym-a",
+    "2": "tennis",
+    "3": "mobility",
+    "4": "gym-b",
+    "5": "tennis",
+    "6": "pickleball",
+    "7": "rest"
+  },
+
+  "sessions": {
+    "gym-a": {
+      "label": "Gym A — Lower + Agility",
+      "tag": "T2",
+      "color": "gym",
+      "duration": 55,
+      "subtitle": "Explosive + Footwork",
+      "blocks": [
+        {
+          "name": "Warm-up + Activation",
+          "duration": 10,
+          "exercises": ["lateral-band-walk", "split-step-shuffle", "ankle-hops"]
+        },
+        {
+          "name": "Strength — Compound",
+          "duration": 20,
+          "exercises": ["trap-bar-deadlift", "bulgarian-split-squat"]
+        },
+        {
+          "name": "Power + Agility",
+          "duration": 15,
+          "exercises": ["lateral-box-jump", "lateral-bound", "shuttle-5-10-5"]
+        },
+        {
+          "name": "Accessories",
+          "duration": 10,
+          "exercises": ["single-leg-calf-raise", "copenhagen-plank"]
+        }
+      ]
+    },
+
+    "gym-b": {
+      "label": "Gym B — Upper + Rotation",
+      "tag": "T5",
+      "color": "gym",
+      "duration": 55,
+      "subtitle": "Rotational power + Scapular",
+      "blocks": [
+        {
+          "name": "Warm-up + Thoracic",
+          "duration": 10,
+          "exercises": ["open-book-rotation", "wall-slide", "band-pull-apart"]
+        },
+        {
+          "name": "Rotational Power",
+          "duration": 12,
+          "exercises": ["med-ball-rotational-throw", "med-ball-overhead-slam"]
+        },
+        {
+          "name": "Strength — Upper",
+          "duration": 20,
+          "exercises": ["landmine-press", "cable-row-half-kneeling", "face-pull", "pallof-press-hold"]
+        },
+        {
+          "name": "Neck/Shoulder Rehab",
+          "duration": 5,
+          "exercises": ["chin-tuck", "prone-ytw"]
+        }
+      ]
+    },
+
+    "mobility": {
+      "label": "Mobility + Recovery",
+      "tag": "T4",
+      "color": "mob",
+      "duration": 25,
+      "subtitle": "Cổ vai gáy + Hông + Cổ chân",
+      "blocks": [
+        {
+          "name": "Cổ — Vai — Gáy",
+          "duration": 10,
+          "exercises": ["levator-scapulae-stretch", "upper-trap-stretch", "chin-tuck-rotation", "thread-the-needle", "foam-roll-upper-back"]
+        },
+        {
+          "name": "Hông + Háng",
+          "duration": 10,
+          "exercises": ["hip-90-90", "worlds-greatest-stretch", "adductor-rock-back", "pigeon-stretch", "foam-roll-quads-it"]
+        },
+        {
+          "name": "Cổ chân + Bắp chân",
+          "duration": 5,
+          "exercises": ["wall-ankle-dorsiflexion", "calf-stretch"]
+        }
+      ]
+    },
+
+    "daily-morning": {
+      "label": "Morning Routine",
+      "tag": "AM",
+      "color": "mob",
+      "duration": 5,
+      "subtitle": "Mỗi sáng",
+      "blocks": [
+        {
+          "name": "Morning",
+          "duration": 5,
+          "exercises": ["cat-cow", "worlds-greatest-stretch", "chin-tuck-rotation", "deep-squat-hold"]
+        }
+      ]
+    },
+
+    "daily-desk": {
+      "label": "Desk Break",
+      "tag": "DESK",
+      "color": "mob",
+      "duration": 3,
+      "subtitle": "Mỗi 2h ngồi",
+      "blocks": [
+        {
+          "name": "Desk Break",
+          "duration": 3,
+          "exercises": ["doorway-pec-stretch", "standing-hip-flexor-stretch", "chin-tuck-trap-stretch"]
+        }
+      ]
+    },
+
+    "pre-tennis": {
+      "label": "Pre-Tennis Warm-up",
+      "tag": "PRE",
+      "color": "tennis",
+      "duration": 8,
+      "subtitle": "Trước T3/T6",
+      "blocks": [
+        {
+          "name": "Warm-up",
+          "duration": 8,
+          "exercises": ["light-jog-high-knees", "lateral-shuffle-carioca", "leg-swing", "arm-circles-torso", "split-step-practice"]
+        }
+      ]
+    },
+
+    "post-tennis": {
+      "label": "Post-Tennis Cool-down",
+      "tag": "POST",
+      "color": "tennis",
+      "duration": 5,
+      "subtitle": "Sau T3/T6",
+      "blocks": [
+        {
+          "name": "Cool-down",
+          "duration": 5,
+          "exercises": ["wrist-stretch", "standing-quad-stretch", "cross-body-shoulder-stretch", "standing-calf-stretch", "deep-breathing-fold"]
+        }
+      ]
+    },
+
+    "tennis": {
+      "label": "Tennis Singles",
+      "tag": "TN",
+      "color": "tennis",
+      "duration": 90,
+      "subtitle": "Tối cố định",
+      "isExternal": true,
+      "blocks": []
+    },
+
+    "pickleball": {
+      "label": "Pickleball",
+      "tag": "PB",
+      "color": "pickle",
+      "duration": 60,
+      "subtitle": "Chiều thứ 7",
+      "isExternal": true,
+      "blocks": []
+    },
+
+    "rest": {
+      "label": "Rest Day",
+      "tag": "OFF",
+      "color": "rest",
+      "duration": 0,
+      "subtitle": "Ngủ bù · Light stretch",
+      "isExternal": true,
+      "blocks": []
+    }
+  }
+}
