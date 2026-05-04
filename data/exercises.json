@@ -1,0 +1,402 @@
+{
+  "_comment": "Library of all exercises. type: strength|reps|time|drill|stretch. rest: seconds (0=no timer). To replace an exercise, edit fields here. To add new, copy an entry and assign new id.",
+
+  "lateral-band-walk": {
+    "name": "Lateral band walk",
+    "type": "reps",
+    "prescription": "2 × 10/bên",
+    "sets": 2,
+    "perSide": true,
+    "note": "Mini band quanh đầu gối · Glute activation",
+    "rest": 0,
+    "video": "lateral+band+walk+form+tutorial"
+  },
+  "split-step-shuffle": {
+    "name": "Split-step → lateral shuffle",
+    "type": "drill",
+    "prescription": "2 × 8",
+    "sets": 2,
+    "note": "Mô phỏng split-step tennis → shuffle 3 bước mỗi bên",
+    "rest": 0,
+    "video": "tennis+split+step+drill+footwork"
+  },
+  "ankle-hops": {
+    "name": "Ankle hops (multi-directional)",
+    "type": "time",
+    "prescription": "2 × 10s/hướng",
+    "sets": 2,
+    "defaultSeconds": 10,
+    "note": "Trước/sau/trái/phải · Nhanh, tiếp đất nhẹ",
+    "rest": 0,
+    "video": "ankle+hops+agility+drill"
+  },
+
+  "trap-bar-deadlift": {
+    "name": "Trap bar deadlift",
+    "type": "strength",
+    "prescription": "3 × 5",
+    "sets": 3,
+    "targetReps": 5,
+    "targetRPE": "7-8",
+    "note": "75-80% 1RM · Explosive lên, controlled xuống",
+    "rest": 180,
+    "video": "trap+bar+deadlift+proper+form"
+  },
+  "bulgarian-split-squat": {
+    "name": "Bulgarian split squat",
+    "type": "strength",
+    "prescription": "3 × 6/bên",
+    "sets": 3,
+    "targetReps": 6,
+    "perSide": true,
+    "targetRPE": "7",
+    "note": "DB hoặc KB · Single-leg stability",
+    "rest": 180,
+    "video": "bulgarian+split+squat+dumbbell+form"
+  },
+
+  "lateral-box-jump": {
+    "name": "Lateral box jump",
+    "type": "drill",
+    "prescription": "3 × 5/bên",
+    "sets": 3,
+    "perSide": true,
+    "note": "Box 30-40cm · Quality > quantity, full reset",
+    "rest": 120,
+    "video": "lateral+box+jump+exercise"
+  },
+  "lateral-bound": {
+    "name": "Lateral bound (stick landing)",
+    "type": "drill",
+    "prescription": "3 × 4/bên",
+    "sets": 3,
+    "perSide": true,
+    "note": "Nhảy ngang, đứng vững 2s · Train deceleration",
+    "rest": 120,
+    "video": "lateral+bound+stick+landing"
+  },
+  "shuttle-5-10-5": {
+    "name": "5-10-5 shuttle",
+    "type": "drill",
+    "prescription": "4 × 1",
+    "sets": 4,
+    "note": "Change of direction pattern",
+    "rest": 60,
+    "video": "5+10+5+pro+agility+shuttle+drill"
+  },
+
+  "single-leg-calf-raise": {
+    "name": "Single-leg calf raise (slow ecc.)",
+    "type": "reps",
+    "prescription": "2 × 12/bên",
+    "sets": 2,
+    "targetReps": 12,
+    "perSide": true,
+    "note": "3s eccentric · Phòng chấn thương Achilles",
+    "rest": 60,
+    "video": "single+leg+calf+raise+slow+eccentric"
+  },
+  "copenhagen-plank": {
+    "name": "Copenhagen adductor plank",
+    "type": "time",
+    "prescription": "2 × 20s/bên",
+    "sets": 2,
+    "perSide": true,
+    "defaultSeconds": 20,
+    "note": "Phòng chấn thương groin",
+    "rest": 120,
+    "video": "copenhagen+adductor+plank+exercise"
+  },
+
+  "open-book-rotation": {
+    "name": "Open book rotation",
+    "type": "reps",
+    "prescription": "2 × 8/bên",
+    "sets": 2,
+    "targetReps": 8,
+    "perSide": true,
+    "note": "Nằm nghiêng · Hít thở sâu, mở rộng vùng ngực",
+    "rest": 0,
+    "video": "open+book+thoracic+rotation+exercise"
+  },
+  "wall-slide": {
+    "name": "Wall slide (scapular)",
+    "type": "reps",
+    "prescription": "2 × 10",
+    "sets": 2,
+    "targetReps": 10,
+    "note": "Lưng áp tường · Lower trap + serratus",
+    "rest": 0,
+    "video": "wall+slide+scapular+exercise"
+  },
+  "band-pull-apart": {
+    "name": "Band pull-apart",
+    "type": "reps",
+    "prescription": "2 × 15",
+    "sets": 2,
+    "targetReps": 15,
+    "note": "Rear delt + rhomboid activation",
+    "rest": 0,
+    "video": "band+pull+apart+form"
+  },
+
+  "med-ball-rotational-throw": {
+    "name": "Med ball rotational throw",
+    "type": "strength",
+    "prescription": "3 × 6/bên",
+    "sets": 3,
+    "targetReps": 6,
+    "perSide": true,
+    "note": "3-5kg · Phát lực hông → core → tay",
+    "rest": 120,
+    "video": "medicine+ball+rotational+throw+wall+tennis"
+  },
+  "med-ball-overhead-slam": {
+    "name": "Med ball overhead slam",
+    "type": "strength",
+    "prescription": "3 × 8",
+    "sets": 3,
+    "targetReps": 8,
+    "note": "Mô phỏng serve · Full extension → slam",
+    "rest": 120,
+    "video": "medicine+ball+overhead+slam+form"
+  },
+
+  "landmine-press": {
+    "name": "Landmine press (single arm)",
+    "type": "strength",
+    "prescription": "3 × 8/bên",
+    "sets": 3,
+    "targetReps": 8,
+    "perSide": true,
+    "targetRPE": "7-8",
+    "note": "Đứng, anti-rotation · Pressing + core",
+    "rest": 180,
+    "video": "single+arm+landmine+press+standing"
+  },
+  "cable-row-half-kneeling": {
+    "name": "Cable row (1 arm, half-kneeling)",
+    "type": "strength",
+    "prescription": "3 × 8/bên",
+    "sets": 3,
+    "targetReps": 8,
+    "perSide": true,
+    "targetRPE": "7-8",
+    "note": "Anti-rotation + scapular retraction",
+    "rest": 180,
+    "video": "half+kneeling+single+arm+cable+row"
+  },
+  "face-pull": {
+    "name": "Face pull",
+    "type": "reps",
+    "prescription": "3 × 12",
+    "sets": 3,
+    "targetReps": 12,
+    "note": "External rotation cuối ROM",
+    "rest": 0,
+    "video": "face+pull+cable+external+rotation+form"
+  },
+  "pallof-press-hold": {
+    "name": "Pallof press hold",
+    "type": "time",
+    "prescription": "3 × 8 reps/bên · 3s hold",
+    "sets": 3,
+    "perSide": true,
+    "defaultSeconds": 24,
+    "note": "Anti-rotation core · Hold 3s mỗi rep",
+    "rest": 60,
+    "video": "pallof+press+hold+anti+rotation"
+  },
+
+  "chin-tuck": {
+    "name": "Chin tuck",
+    "type": "reps",
+    "prescription": "2 × 10",
+    "sets": 2,
+    "targetReps": 10,
+    "note": "Kéo cằm về sau, giữ 5s · Chống forward head",
+    "rest": 0,
+    "video": "chin+tuck+exercise+forward+head"
+  },
+  "prone-ytw": {
+    "name": "Prone Y-T-W raise",
+    "type": "reps",
+    "prescription": "2 × 8/hình",
+    "sets": 2,
+    "targetReps": 8,
+    "note": "Bench nghiêng · Không tạ hoặc 1-2kg",
+    "rest": 0,
+    "video": "prone+Y+T+W+raise+shoulder"
+  },
+
+  "levator-scapulae-stretch": {
+    "name": "Levator scapulae stretch",
+    "type": "stretch",
+    "prescription": "2 × 30s/bên",
+    "note": "Nghiêng đầu 45° nhìn xuống nách",
+    "video": "levator+scapulae+stretch+neck"
+  },
+  "upper-trap-stretch": {
+    "name": "Upper trap stretch",
+    "type": "stretch",
+    "prescription": "2 × 30s/bên",
+    "note": "Nghiêng đầu, tay kéo nhẹ"
+  },
+  "chin-tuck-rotation": {
+    "name": "Chin tuck + neck rotation",
+    "type": "stretch",
+    "prescription": "10 reps/hướng",
+    "note": "Chậm, controlled"
+  },
+  "thread-the-needle": {
+    "name": "Thread the needle",
+    "type": "stretch",
+    "prescription": "2 × 8/bên",
+    "note": "Tư thế bò · Thoracic rotation",
+    "video": "thread+the+needle+thoracic+rotation"
+  },
+  "foam-roll-upper-back": {
+    "name": "Foam roll upper back",
+    "type": "stretch",
+    "prescription": "60-90s",
+    "note": "Lăn chậm thoracic, không roll cổ"
+  },
+
+  "hip-90-90": {
+    "name": "90/90 hip switch",
+    "type": "stretch",
+    "prescription": "2 × 8/bên",
+    "note": "Giữ lưng thẳng, xoay chậm",
+    "video": "90+90+hip+switch+mobility"
+  },
+  "worlds-greatest-stretch": {
+    "name": "World's greatest stretch",
+    "type": "stretch",
+    "prescription": "2 × 5/bên",
+    "note": "Hip flexor + thoracic rotation combo",
+    "video": "world%27s+greatest+stretch+tutorial"
+  },
+  "adductor-rock-back": {
+    "name": "Adductor rock-back",
+    "type": "stretch",
+    "prescription": "2 × 10",
+    "note": "Half-kneeling, rock về sau",
+    "video": "adductor+rock+back+stretch"
+  },
+  "pigeon-stretch": {
+    "name": "Pigeon stretch",
+    "type": "stretch",
+    "prescription": "2 × 30s/bên",
+    "note": "Hoặc figure-4 nằm",
+    "video": "pigeon+stretch+hip+opener"
+  },
+  "foam-roll-quads-it": {
+    "name": "Foam roll quads + IT band",
+    "type": "stretch",
+    "prescription": "60s/bên"
+  },
+
+  "wall-ankle-dorsiflexion": {
+    "name": "Wall ankle dorsiflexion",
+    "type": "stretch",
+    "prescription": "2 × 10/bên",
+    "note": "Gối chạm tường, giữ gót không nhấc",
+    "video": "wall+ankle+dorsiflexion+mobilization"
+  },
+  "calf-stretch": {
+    "name": "Calf stretch (gastroc + soleus)",
+    "type": "stretch",
+    "prescription": "2 × 30s/bên",
+    "note": "Chân thẳng + chân gập gối"
+  },
+
+  "cat-cow": {
+    "name": "Cat-cow",
+    "type": "stretch",
+    "prescription": "10 reps",
+    "note": "Đánh thức cột sống"
+  },
+  "deep-squat-hold": {
+    "name": "Deep squat hold",
+    "type": "stretch",
+    "prescription": "30-60s",
+    "note": "Mở ankle + hip cùng lúc"
+  },
+  "doorway-pec-stretch": {
+    "name": "Doorway pec stretch",
+    "type": "stretch",
+    "prescription": "20s/bên",
+    "note": "Chống rounded shoulders"
+  },
+  "standing-hip-flexor-stretch": {
+    "name": "Standing hip flexor stretch",
+    "type": "stretch",
+    "prescription": "20s/bên",
+    "note": "Bước lunge về trước"
+  },
+  "chin-tuck-trap-stretch": {
+    "name": "Chin tuck + upper trap stretch",
+    "type": "stretch",
+    "prescription": "15s/bên",
+    "note": "Giảm tension cổ vai gáy ngay"
+  },
+
+  "light-jog-high-knees": {
+    "name": "Light jog + high knees",
+    "type": "stretch",
+    "prescription": "2 phút",
+    "note": "Tăng nhịp tim"
+  },
+  "lateral-shuffle-carioca": {
+    "name": "Lateral shuffle + carioca",
+    "type": "stretch",
+    "prescription": "2 × 20m",
+    "note": "Kích hoạt lateral movement",
+    "video": "carioca+drill+footwork+warm+up"
+  },
+  "leg-swing": {
+    "name": "Leg swing (trước/sau + ngang)",
+    "type": "stretch",
+    "prescription": "10/bên/hướng"
+  },
+  "arm-circles-torso": {
+    "name": "Arm circles + torso rotation",
+    "type": "stretch",
+    "prescription": "10/hướng"
+  },
+  "split-step-practice": {
+    "name": "Split-step practice",
+    "type": "stretch",
+    "prescription": "10 reps",
+    "note": "Timing trước khi đối thủ đánh"
+  },
+
+  "wrist-stretch": {
+    "name": "Wrist flexor/extensor stretch",
+    "type": "stretch",
+    "prescription": "20s/hướng",
+    "note": "Phòng tennis elbow"
+  },
+  "standing-quad-stretch": {
+    "name": "Standing quad stretch",
+    "type": "stretch",
+    "prescription": "30s/bên"
+  },
+  "cross-body-shoulder-stretch": {
+    "name": "Cross-body shoulder stretch",
+    "type": "stretch",
+    "prescription": "30s/bên",
+    "note": "Posterior shoulder"
+  },
+  "standing-calf-stretch": {
+    "name": "Standing calf stretch",
+    "type": "stretch",
+    "prescription": "30s/bên"
+  },
+  "deep-breathing-fold": {
+    "name": "Deep breathing + forward fold",
+    "type": "stretch",
+    "prescription": "60s",
+    "note": "Hạ nhịp tim"
+  }
+}
