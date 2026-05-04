@@ -2,30 +2,28 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Tennis">
 <meta name="theme-color" content="#00502a">
 <title>Tennis Training</title>
 
-<!-- Favicons -->
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-
-<!-- iOS home screen icon -->
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-
-<!-- PWA manifest -->
 <link rel="manifest" href="manifest.json">
+
 <style>
   :root {
     --bg: #0a0c10;
     --s1: #151821;
     --s2: #1c2030;
+    --s3: #232838;
     --bd: #262b3d;
     --tx: #e8eaf2;
     --t2: #9ba0b8;
+    --t3: #6b7290;
     --bl: #5b8def;
     --tl: #3ecfb4;
     --or: #f5943a;
@@ -33,424 +31,910 @@
     --gn: #4ccc6a;
     --pu: #a98cf0;
     --r: 14px;
+    --safe-bot: env(safe-area-inset-bottom, 0px);
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html{font-size:16px;scroll-behavior:smooth}
   body{
     font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;
-    background:var(--bg);color:var(--tx);line-height:1.55;
-    padding:16px 16px 72px;max-width:520px;margin:0 auto;
+    background:var(--bg);color:var(--tx);line-height:1.5;
+    max-width:520px;margin:0 auto;
     -webkit-font-smoothing:antialiased;
+    padding-bottom:calc(72px + var(--safe-bot));
   }
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  input{font:inherit;color:inherit}
+
+  /* Tab views */
+  .view{display:none;padding:16px 16px 16px}
+  .view.active{display:block}
 
   /* Header */
-  .hero{margin-bottom:20px}
-  .hero h1{font-size:1.5rem;font-weight:800;letter-spacing:-0.3px}
-  .hero .sub{color:var(--t2);font-size:.82rem;margin-top:4px}
+  .head{margin-bottom:18px}
+  .head h1{font-size:1.4rem;font-weight:800;letter-spacing:-0.3px}
+  .head .sub{color:var(--t2);font-size:.8rem;margin-top:2px}
 
-  /* Stats */
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px}
-  .stat{background:var(--s1);border-radius:12px;padding:12px 10px;text-align:center}
-  .stat .v{font-size:1.3rem;font-weight:700;color:var(--bl)}
-  .stat .l{font-size:.68rem;color:var(--t2);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+  /* Tags */
+  .tag{display:inline-block;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.3px}
+  .t-gym{background:rgba(91,141,239,.14);color:var(--bl)}
+  .t-tennis{background:rgba(62,207,180,.14);color:var(--tl)}
+  .t-pickle{background:rgba(245,148,58,.14);color:var(--or)}
+  .t-mob{background:rgba(169,140,240,.14);color:var(--pu)}
+  .t-rest{background:rgba(155,160,184,.08);color:var(--t2)}
 
-  /* Week */
-  .week{margin-bottom:28px}
-  .wt{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--t2);margin-bottom:10px}
+  /* ═══ HOME VIEW ═══ */
+  .today-card{
+    background:linear-gradient(135deg,#00502a,#003d20);
+    border-radius:18px;padding:22px 20px;color:#F5F0E1;
+    margin-bottom:16px;position:relative;overflow:hidden;
+  }
+  .today-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:#4F2683}
+  .today-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:#4F2683}
+  .today-date{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;opacity:.85;margin-bottom:4px;font-family:Georgia,serif}
+  .today-label{font-size:1.5rem;font-weight:700;font-family:Georgia,serif;margin-bottom:2px}
+  .today-sub{font-size:.85rem;opacity:.85;margin-bottom:18px}
+  .start-btn{
+    background:#F5F0E1;color:#003d20;font-weight:700;font-size:1rem;
+    width:100%;padding:14px;border-radius:10px;
+  }
+  .start-btn:active{background:#e8e0c8}
+
+  .switch-row{margin-top:14px}
+  .switch-row .lbl{font-size:.72rem;color:var(--t2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+  .switch-grid{display:flex;gap:6px;flex-wrap:wrap}
+  .switch-btn{
+    background:var(--s2);color:var(--tx);font-size:.78rem;font-weight:600;
+    padding:7px 12px;border-radius:18px;border:1px solid var(--bd);
+  }
+  .switch-btn:active{background:var(--s3)}
+
+  /* Week schedule */
+  .week-head{font-size:.7rem;color:var(--t2);text-transform:uppercase;letter-spacing:1px;margin:24px 0 8px}
+  .week-list{background:var(--s1);border-radius:var(--r);padding:4px 16px}
   .dr{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--bd)}
   .dr:last-child{border-bottom:none}
+  .dr.today{position:relative}
+  .dr.today::before{content:'';position:absolute;left:-16px;top:50%;transform:translateY(-50%);width:3px;height:60%;background:var(--bl);border-radius:0 2px 2px 0}
   .dl{width:32px;font-size:.78rem;font-weight:700;color:var(--t2);flex-shrink:0}
-  .dt{font-size:.76rem;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap}
-  .tg{background:rgba(91,141,239,.14);color:var(--bl)}
-  .tt{background:rgba(62,207,180,.14);color:var(--tl)}
-  .tp{background:rgba(245,148,58,.14);color:var(--or)}
-  .tm{background:rgba(169,140,240,.14);color:var(--pu)}
-  .tr{background:rgba(155,160,184,.08);color:var(--t2)}
-  .di{font-size:.78rem;color:var(--t2);margin-left:auto;text-align:right}
+  .dr.today .dl{color:var(--bl)}
+  .di{font-size:.78rem;color:var(--t2);margin-left:auto}
+  .di .check{color:var(--gn);font-weight:700}
 
-  /* Details/Summary — native collapsible */
-  details{margin-bottom:12px}
-  summary{
-    background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);
-    padding:16px;display:flex;align-items:center;gap:12px;
-    cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;
-    transition:background .15s;
+  /* ═══ SESSION VIEW (active workout) ═══ */
+  .ses-head{
+    position:sticky;top:0;z-index:10;background:var(--bg);
+    padding:12px 0 12px;margin:-16px -16px 12px;padding-left:16px;padding-right:16px;
+    border-bottom:1px solid var(--bd);
   }
-  summary::-webkit-details-marker{display:none}
-  summary::marker{display:none;content:''}
-  summary:active{background:var(--s2)}
-  summary .ti{font-size:1rem;font-weight:700}
-  summary .si{font-size:.75rem;color:var(--t2)}
-  summary .arr{
-    margin-left:auto;width:20px;height:20px;flex-shrink:0;
-    transition:transform .25s ease;color:var(--t2);
-  }
-  details[open]>summary .arr{transform:rotate(180deg)}
-  details[open]>summary{border-radius:var(--r) var(--r) 0 0;border-bottom-color:transparent}
-  .dc{
-    background:var(--s1);border:1px solid var(--bd);border-top:none;
-    border-radius:0 0 var(--r) var(--r);padding:4px 0 8px;
-  }
+  .ses-row{display:flex;align-items:center;gap:10px}
+  .ses-back{font-size:.85rem;color:var(--t2);font-weight:600}
+  .ses-title{font-size:.95rem;font-weight:700;flex:1;text-align:center}
+  .ses-finish{font-size:.85rem;color:var(--bl);font-weight:600}
+  .ses-meta{font-size:.72rem;color:var(--t3);text-align:center;margin-top:4px}
 
-  /* Blocks inside details */
-  .bk{border-bottom:1px solid var(--bd);padding:0}
-  .bk:last-child{border-bottom:none}
-  .bh{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
-  .bh h3{font-size:.88rem;font-weight:600}
-  .bh .du{font-size:.75rem;color:var(--t2)}
+  .block{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);margin-bottom:14px;overflow:hidden}
+  .bh{padding:13px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
+  .bh h3{font-size:.92rem;font-weight:700}
+  .bh .du{font-size:.74rem;color:var(--t2)}
 
-  /* Exercise item */
-  .ex{padding:14px 16px;border-bottom:1px solid var(--bd)}
+  .ex{padding:14px 16px;border-bottom:1px solid var(--bd);position:relative}
   .ex:last-child{border-bottom:none}
-  .et{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-  .en{font-size:.92rem;font-weight:600}
-  .es{font-size:.82rem;font-weight:600;color:var(--bl);white-space:nowrap;flex-shrink:0}
-  .ed{font-size:.78rem;color:var(--t2);margin-top:4px;line-height:1.45}
-  .ea{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
-  .vb{
-    display:inline-flex;align-items:center;gap:5px;
-    background:rgba(240,60,60,.1);color:#f06060;border:none;border-radius:8px;
-    padding:7px 14px;font-size:.78rem;font-weight:600;cursor:pointer;
-    text-decoration:none;-webkit-user-select:none;
+  .ex.done{background:rgba(76,204,106,.05)}
+  .ex-top{display:flex;align-items:flex-start;gap:8px}
+  .ex-name{font-size:.94rem;font-weight:600;flex:1}
+  .ex-rx{font-size:.78rem;color:var(--bl);font-weight:600;white-space:nowrap}
+  .ex-note{font-size:.76rem;color:var(--t2);margin-top:3px;line-height:1.4}
+  .ex-last{font-size:.74rem;color:var(--t3);margin-top:6px;font-style:italic}
+  .ex-last b{color:var(--t2);font-style:normal;font-weight:600}
+
+  /* Set rows */
+  .sets{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+  .set-row{display:flex;align-items:center;gap:6px;padding:8px;background:var(--s2);border-radius:8px}
+  .set-row.done{background:rgba(76,204,106,.1)}
+  .set-num{font-size:.74rem;color:var(--t2);font-weight:700;width:32px;flex-shrink:0}
+  .set-input{
+    background:var(--s3);border:1px solid var(--bd);border-radius:6px;
+    padding:7px 8px;font-size:.88rem;width:60px;text-align:center;font-weight:600;
   }
+  .set-input:focus{outline:none;border-color:var(--bl)}
+  .set-input.rpe{width:48px}
+  .set-row.done .set-input{background:transparent;border-color:transparent}
+  .set-x{color:var(--t2);font-size:.78rem}
+  .set-tick{
+    width:32px;height:32px;border-radius:50%;border:1.5px solid var(--bd);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:auto;
+    font-size:.9rem;color:var(--t2);background:var(--s3);
+  }
+  .set-row.done .set-tick{background:var(--gn);border-color:var(--gn);color:#fff}
+
+  /* Time-based input */
+  .set-time{width:72px}
+
+  /* Drill / stretch checkbox */
+  .check-row{margin-top:8px;display:flex;align-items:center;gap:8px}
+  .check-btn{
+    flex:1;background:var(--s2);border:1px solid var(--bd);border-radius:8px;
+    padding:11px;font-size:.85rem;font-weight:600;color:var(--t2);
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .check-btn.done{background:rgba(76,204,106,.15);border-color:var(--gn);color:var(--gn)}
+  .check-btn .ic{width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:.7rem}
+  .check-btn.done .ic{background:var(--gn);border-color:var(--gn);color:#fff}
+
+  /* Action row */
+  .ex-actions{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .vb{display:inline-flex;align-items:center;gap:5px;background:rgba(240,60,60,.1);color:#f06060;border-radius:7px;padding:6px 11px;font-size:.74rem;font-weight:600;text-decoration:none}
   .vb:active{background:rgba(240,60,60,.2)}
-  .vb svg{width:14px;height:14px}
-  .ss{background:rgba(91,141,239,.08);color:var(--bl);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:6px 16px;border-bottom:1px solid var(--bd)}
+  .vb svg{width:13px;height:13px}
+  .nb{background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:6px 11px;font-size:.74rem;font-weight:600;color:var(--t2)}
+  .nb:active{background:var(--s3)}
 
-  /* Mobility item */
-  .mi{padding:12px 16px;border-bottom:1px solid var(--bd)}
-  .mi:last-child{border-bottom:none}
-  .mn{font-size:.9rem;font-weight:600}
-  .mr{font-size:.78rem;color:var(--t2);margin-top:3px}
+  /* Note input */
+  .note-in{
+    width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:8px;
+    padding:10px;margin-top:8px;font-size:.82rem;color:var(--tx);resize:none;
+    font-family:inherit;
+  }
+  .note-in:focus{outline:none;border-color:var(--bl)}
 
-  /* Note boxes */
-  .no{background:var(--s1);border-left:3px solid var(--bl);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;margin:8px 16px;font-size:.85rem;line-height:1.5}
-  .no.w{border-left-color:var(--or)}
-  .no strong{display:block;margin-bottom:4px;font-size:.88rem}
+  /* ═══ REST TIMER OVERLAY ═══ */
+  .rest-overlay{
+    position:fixed;left:0;right:0;bottom:calc(60px + var(--safe-bot));
+    background:linear-gradient(135deg,#1a4d2e,#0d3019);
+    color:#F5F0E1;padding:14px 16px;display:none;align-items:center;gap:14px;
+    box-shadow:0 -4px 20px rgba(0,0,0,.4);max-width:520px;margin:0 auto;
+    z-index:50;
+  }
+  .rest-overlay.show{display:flex}
+  .rest-time{font-size:1.6rem;font-weight:700;font-variant-numeric:tabular-nums;font-family:Georgia,serif;min-width:80px}
+  .rest-info{flex:1;font-size:.78rem;opacity:.85}
+  .rest-btn{background:rgba(255,255,255,.15);color:#F5F0E1;font-weight:600;font-size:.78rem;padding:8px 12px;border-radius:7px}
 
-  /* Bottom nav */
-  .qn{
+  /* ═══ TAB BAR ═══ */
+  .tabs{
     position:fixed;bottom:0;left:0;right:0;
-    background:rgba(10,12,16,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-    border-top:1px solid var(--bd);display:flex;justify-content:center;gap:4px;
-    padding:10px 12px;z-index:100;
+    background:rgba(10,12,16,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-top:1px solid var(--bd);
+    padding:8px 8px calc(8px + var(--safe-bot));
+    display:flex;justify-content:space-around;
+    max-width:520px;margin:0 auto;z-index:100;
   }
-  .nb{
-    background:var(--s2);border:1px solid var(--bd);color:var(--t2);
-    font-size:.72rem;font-weight:600;padding:7px 11px;border-radius:20px;
-    cursor:pointer;white-space:nowrap;text-decoration:none;
+  .tab{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+    padding:6px;border-radius:8px;color:var(--t2);font-size:.65rem;font-weight:600;
   }
-  .nb:active{background:var(--bl);color:#fff;border-color:var(--bl)}
+  .tab svg{width:22px;height:22px}
+  .tab.active{color:var(--bl)}
 
-  .foot{color:var(--t2);font-size:.7rem;text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--bd)}
-  .gap{height:4px}
+  /* ═══ HISTORY VIEW ═══ */
+  .ses-card{
+    background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);
+    padding:14px 16px;margin-bottom:10px;
+  }
+  .ses-card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .ses-card-title{font-size:.95rem;font-weight:700}
+  .ses-card-date{font-size:.74rem;color:var(--t2)}
+  .ses-card-stats{font-size:.78rem;color:var(--t2);margin-top:6px}
+  .ses-card-stats b{color:var(--tx);font-weight:600}
 
-  /* YouTube SVG icon reusable */
-  .yi{width:14px;height:14px;flex-shrink:0}
+  .empty-state{text-align:center;padding:40px 20px;color:var(--t2)}
+  .empty-state h3{font-size:1rem;margin-bottom:6px;color:var(--tx)}
+  .empty-state p{font-size:.85rem;line-height:1.5}
+
+  /* ═══ SETTINGS VIEW ═══ */
+  .set-section{background:var(--s1);border-radius:var(--r);padding:4px 16px;margin-bottom:14px}
+  .set-row-s{display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid var(--bd)}
+  .set-row-s:last-child{border-bottom:none}
+  .set-label{flex:1;font-size:.88rem}
+  .set-act{color:var(--bl);font-size:.85rem;font-weight:600}
+  .set-act.danger{color:var(--rd)}
+
+  /* Toast */
+  .toast{
+    position:fixed;bottom:90px;left:50%;transform:translateX(-50%);
+    background:var(--gn);color:#fff;padding:10px 18px;border-radius:24px;
+    font-size:.82rem;font-weight:600;z-index:200;
+    animation:toastIn .25s ease,toastOut .25s ease 1.5s forwards;
+  }
+  @keyframes toastIn{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+  @keyframes toastOut{to{opacity:0;transform:translate(-50%,10px)}}
+
+  /* Loading */
+  .loading{padding:60px 20px;text-align:center;color:var(--t2);font-size:.85rem}
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <h1>Tennis Training Plan</h1>
-  <div class="sub">Huy Lâm · 66kg / 1m70 · Agility + Footwork + Mobility</div>
+<!-- ═══════ HOME VIEW ═══════ -->
+<div class="view active" id="view-home">
+  <div class="head">
+    <h1>Tennis Training</h1>
+    <div class="sub">Huy Lâm · Agility + Footwork</div>
+  </div>
+
+  <div id="home-content">
+    <div class="loading">Đang tải plan…</div>
+  </div>
 </div>
 
-<div class="stats">
-  <div class="stat"><div class="v">54</div><div class="l">Rest HR</div></div>
-  <div class="stat"><div class="v">6.9h</div><div class="l">Avg Sleep</div></div>
-  <div class="stat"><div class="v">5x</div><div class="l">/ tuần</div></div>
+<!-- ═══════ SESSION VIEW (active workout) ═══════ -->
+<div class="view" id="view-session">
+  <div class="ses-head">
+    <div class="ses-row">
+      <button class="ses-back" onclick="exitSession()">← Thoát</button>
+      <div class="ses-title" id="ses-title">Session</div>
+      <button class="ses-finish" onclick="finishSession()">Xong</button>
+    </div>
+    <div class="ses-meta" id="ses-meta"></div>
+  </div>
+  <div id="ses-content"></div>
 </div>
 
-<!-- ══ WEEK ══ -->
-<div class="week" id="s-week">
-  <div class="wt">Lịch tuần</div>
-  <div class="dr"><div class="dl">T2</div><span class="dt tg">Gym A · Lower + Agility</span><div class="di">Sáng</div></div>
-  <div class="dr"><div class="dl">T3</div><span class="dt tt">Tennis Singles</span><div class="di">Tối</div></div>
-  <div class="dr"><div class="dl">T4</div><span class="dt tm">Mobility + Recovery</span><div class="di">20-30'</div></div>
-  <div class="dr"><div class="dl">T5</div><span class="dt tg">Gym B · Upper + Rotation</span><div class="di">Sáng</div></div>
-  <div class="dr"><div class="dl">T6</div><span class="dt tt">Tennis Singles</span><div class="di">Tối</div></div>
-  <div class="dr"><div class="dl">T7</div><span class="dt tp">Pickleball</span><div class="di">Chiều</div></div>
-  <div class="dr"><div class="dl">CN</div><span class="dt tr">Rest</span><div class="di"></div></div>
+<!-- ═══════ HISTORY VIEW ═══════ -->
+<div class="view" id="view-history">
+  <div class="head">
+    <h1>Lịch sử</h1>
+    <div class="sub">Các session đã hoàn thành</div>
+  </div>
+  <div id="history-content"></div>
 </div>
 
-<!-- ══ GYM A ══ -->
-<details id="s-gyma">
-  <summary>
-    <span class="dt tg" style="font-size:.7rem">T2</span>
-    <div><div class="ti">Gym A — Lower + Agility</div><div class="si">55 phút · Explosive + Footwork</div></div>
-    <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-  </summary>
-  <div class="dc">
-
-    <div class="bk">
-      <div class="bh"><h3>Warm-up + Activation</h3><div class="du">10'</div></div>
-      <div class="ex">
-        <div class="et"><div class="en">Lateral band walk</div><div class="es">2×10/bên</div></div>
-        <div class="ed">Mini band quanh đầu gối · Giữ tư thế thấp, glute activation</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=lateral+band+walk+form+tutorial" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">Split-step → lateral shuffle</div><div class="es">2×8</div></div>
-        <div class="ed">Mô phỏng split-step tennis → shuffle 3 bước mỗi bên</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=tennis+split+step+drill+footwork" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">Ankle hops (multi-directional)</div><div class="es">2×10s/hướng</div></div>
-        <div class="ed">Trước/sau/trái/phải · Nhanh, tiếp đất nhẹ</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=ankle+hops+agility+drill" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-    </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Strength — Compound</h3><div class="du">20'</div></div>
-      <div class="ex">
-        <div class="et"><div class="en">Trap bar deadlift</div><div class="es">3×5</div></div>
-        <div class="ed">75-80% 1RM · Explosive lên, controlled xuống</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=trap+bar+deadlift+proper+form" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">Bulgarian split squat</div><div class="es">3×6/bên</div></div>
-        <div class="ed">DB hoặc KB · Đẩy mạnh lên, focus single-leg stability</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=bulgarian+split+squat+dumbbell+form" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-    </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Power + Agility</h3><div class="du">15'</div></div>
-      <div class="ex">
-        <div class="et"><div class="en">Lateral box jump</div><div class="es">3×5/bên</div></div>
-        <div class="ed">Box 30-40cm · Quality > quantity, full reset mỗi rep</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=lateral+box+jump+exercise" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">Lateral bound (stick landing)</div><div class="es">3×4/bên</div></div>
-        <div class="ed">Nhảy ngang, đứng vững 2s · Train deceleration</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=lateral+bound+stick+landing" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">5-10-5 shuttle</div><div class="es">4×1</div></div>
-        <div class="ed">Rest 45-60s · Change of direction pattern</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=5+10+5+pro+agility+shuttle+drill" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-    </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Accessories</h3><div class="du">10'</div></div>
-      <div class="ex">
-        <div class="et"><div class="en">Single-leg calf raise (slow ecc.)</div><div class="es">2×12/bên</div></div>
-        <div class="ed">3s eccentric · Phòng chấn thương Achilles</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=single+leg+calf+raise+slow+eccentric" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">Copenhagen adductor plank</div><div class="es">2×20s/bên</div></div>
-        <div class="ed">Phòng chấn thương groin — phổ biến ở tennis</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=copenhagen+adductor+plank+exercise" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-    </div>
-
+<!-- ═══════ SETTINGS VIEW ═══════ -->
+<div class="view" id="view-settings">
+  <div class="head">
+    <h1>Cài đặt</h1>
+    <div class="sub">Quản lý dữ liệu</div>
   </div>
-</details>
-
-<div class="gap"></div>
-
-<!-- ══ GYM B ══ -->
-<details id="s-gymb">
-  <summary>
-    <span class="dt tg" style="font-size:.7rem">T5</span>
-    <div><div class="ti">Gym B — Upper + Rotation</div><div class="si">55 phút · Rotational power + Scapular</div></div>
-    <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-  </summary>
-  <div class="dc">
-
-    <div class="bk">
-      <div class="bh"><h3>Warm-up + Thoracic</h3><div class="du">10'</div></div>
-      <div class="ex">
-        <div class="et"><div class="en">Open book rotation</div><div class="es">2×8/bên</div></div>
-        <div class="ed">Nằm nghiêng · Hít thở sâu, mở rộng vùng ngực</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=open+book+thoracic+rotation+exercise" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">Wall slide (scapular)</div><div class="es">2×10</div></div>
-        <div class="ed">Lưng áp tường · Lower trap + serratus activation</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=wall+slide+scapular+exercise" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">Band pull-apart</div><div class="es">2×15</div></div>
-        <div class="ed">Rear delt + rhomboid activation</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=band+pull+apart+form" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
+  <div class="set-section">
+    <div class="set-row-s">
+      <div class="set-label">Export dữ liệu (JSON)</div>
+      <button class="set-act" onclick="exportData()">Tải về</button>
     </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Rotational Power</h3><div class="du">12'</div></div>
-      <div class="ex">
-        <div class="et"><div class="en">Med ball rotational throw</div><div class="es">3×6/bên</div></div>
-        <div class="ed">3-5kg · Phát lực hông → core → tay</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=medicine+ball+rotational+throw+wall+tennis" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">Med ball overhead slam</div><div class="es">3×8</div></div>
-        <div class="ed">Mô phỏng serve · Full extension → slam</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=medicine+ball+overhead+slam+form" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
+    <div class="set-row-s">
+      <div class="set-label">Import dữ liệu</div>
+      <label class="set-act" style="cursor:pointer">
+        Chọn file
+        <input type="file" accept=".json" style="display:none" onchange="importData(event)">
+      </label>
     </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Strength — Upper</h3><div class="du">20'</div></div>
-      <div class="ex">
-        <div class="et"><div class="en">Landmine press (single arm)</div><div class="es">3×8/bên</div></div>
-        <div class="ed">Đứng, anti-rotation · Pressing + core</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=single+arm+landmine+press+standing" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">Cable row (1 arm, half-kneeling)</div><div class="es">3×8/bên</div></div>
-        <div class="ed">Anti-rotation + scapular retraction</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=half+kneeling+single+arm+cable+row" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ss">SUPERSET</div>
-      <div class="ex">
-        <div class="et"><div class="en">A1: Face pull</div><div class="es">3×12</div></div>
-        <div class="ed">External rotation cuối ROM · Bảo vệ rotator cuff</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=face+pull+cable+external+rotation+form" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">A2: Pallof press hold</div><div class="es">3×8/bên</div></div>
-        <div class="ed">Anti-rotation core · Hold 3s mỗi rep</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=pallof+press+hold+anti+rotation" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-    </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Neck/Shoulder Rehab</h3><div class="du">5'</div></div>
-      <div class="ex">
-        <div class="et"><div class="en">Chin tuck</div><div class="es">2×10</div></div>
-        <div class="ed">Kéo cằm về sau, giữ 5s · Chống forward head posture</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=chin+tuck+exercise+forward+head" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-      <div class="ex">
-        <div class="et"><div class="en">Prone Y-T-W raise</div><div class="es">2×8/hình</div></div>
-        <div class="ed">Bench nghiêng · Không tạ hoặc 1-2kg</div>
-        <div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=prone+Y+T+W+raise+shoulder" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div>
-      </div>
-    </div>
-
   </div>
-</details>
-
-<div class="gap"></div>
-
-<!-- ══ MOBILITY ══ -->
-<details id="s-mobility">
-  <summary>
-    <span class="dt tm" style="font-size:.7rem">T4</span>
-    <div><div class="ti">Mobility + Recovery</div><div class="si">25 phút · Cổ vai gáy + Hông + Cổ chân</div></div>
-    <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-  </summary>
-  <div class="dc">
-
-    <div class="bk">
-      <div class="bh"><h3>Cổ — Vai — Gáy</h3><div class="du">10'</div></div>
-      <div class="mi"><div class="et"><div class="mn">Levator scapulae stretch</div><div class="es">2×30s/bên</div></div><div class="mr">Nghiêng đầu 45° nhìn xuống nách</div><div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=levator+scapulae+stretch+neck" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div></div>
-      <div class="mi"><div class="et"><div class="mn">Upper trap stretch</div><div class="es">2×30s/bên</div></div><div class="mr">Nghiêng đầu, tay kéo nhẹ</div></div>
-      <div class="mi"><div class="et"><div class="mn">Chin tuck + neck rotation</div><div class="es">10/hướng</div></div><div class="mr">Chậm, controlled</div></div>
-      <div class="mi"><div class="et"><div class="mn">Thread the needle</div><div class="es">2×8/bên</div></div><div class="mr">Tư thế bò · Thoracic rotation</div><div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=thread+the+needle+thoracic+rotation" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div></div>
-      <div class="mi"><div class="et"><div class="mn">Foam roll upper back</div><div class="es">60-90s</div></div><div class="mr">Lăn chậm thoracic, không roll cổ</div></div>
+  <div class="set-section">
+    <div class="set-row-s">
+      <div class="set-label">Xóa toàn bộ history</div>
+      <button class="set-act danger" onclick="clearHistory()">Xóa</button>
     </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Hông + Háng</h3><div class="du">10'</div></div>
-      <div class="mi"><div class="et"><div class="mn">90/90 hip switch</div><div class="es">2×8/bên</div></div><div class="mr">Giữ lưng thẳng, xoay chậm</div><div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=90+90+hip+switch+mobility" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div></div>
-      <div class="mi"><div class="et"><div class="mn">World's greatest stretch</div><div class="es">2×5/bên</div></div><div class="mr">Hip flexor + thoracic rotation combo</div><div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=world%27s+greatest+stretch+tutorial" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div></div>
-      <div class="mi"><div class="et"><div class="mn">Adductor rock-back</div><div class="es">2×10</div></div><div class="mr">Half-kneeling, rock về sau</div><div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=adductor+rock+back+stretch" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div></div>
-      <div class="mi"><div class="et"><div class="mn">Pigeon stretch</div><div class="es">2×30s/bên</div></div><div class="mr">Hoặc figure-4 nằm</div><div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=pigeon+stretch+hip+opener" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div></div>
-      <div class="mi"><div class="et"><div class="mn">Foam roll quads + IT band</div><div class="es">60s/bên</div></div></div>
-    </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Cổ chân + Bắp chân</h3><div class="du">5'</div></div>
-      <div class="mi"><div class="et"><div class="mn">Wall ankle dorsiflexion</div><div class="es">2×10/bên</div></div><div class="mr">Gối chạm tường, giữ gót không nhấc</div><div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=wall+ankle+dorsiflexion+mobilization" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div></div>
-      <div class="mi"><div class="et"><div class="mn">Calf stretch (gastroc + soleus)</div><div class="es">2×30s/bên</div></div><div class="mr">Chân thẳng + chân gập gối</div></div>
-    </div>
-
   </div>
-</details>
-
-<div class="gap"></div>
-
-<!-- ══ DAILY ══ -->
-<details id="s-daily">
-  <summary>
-    <span class="dt tm" style="font-size:.7rem">Daily</span>
-    <div><div class="ti">Stretch hàng ngày</div><div class="si">Morning + Desk break + Pre/Post tennis</div></div>
-    <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-  </summary>
-  <div class="dc">
-
-    <div class="bk">
-      <div class="bh"><h3>Morning Routine</h3><div class="du">5'</div></div>
-      <div class="mi"><div class="et"><div class="mn">Cat-cow</div><div class="es">10 reps</div></div><div class="mr">Đánh thức cột sống</div></div>
-      <div class="mi"><div class="et"><div class="mn">World's greatest stretch</div><div class="es">3/bên</div></div><div class="mr">Mở hông + ngực</div></div>
-      <div class="mi"><div class="et"><div class="mn">Chin tuck + neck circles</div><div class="es">10+5/hướng</div></div><div class="mr">Chống stiff neck</div></div>
-      <div class="mi"><div class="et"><div class="mn">Deep squat hold</div><div class="es">30-60s</div></div><div class="mr">Mở ankle + hip cùng lúc</div></div>
+  <div class="set-section">
+    <div class="set-row-s">
+      <div class="set-label">Phiên bản</div>
+      <div style="color:var(--t2);font-size:.85rem">Phase 1 · v0.1</div>
     </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Desk Break</h3><div class="du">3' / mỗi 2h</div></div>
-      <div class="mi"><div class="et"><div class="mn">Doorway pec stretch</div><div class="es">20s/bên</div></div><div class="mr">Chống rounded shoulders</div></div>
-      <div class="mi"><div class="et"><div class="mn">Standing hip flexor stretch</div><div class="es">20s/bên</div></div><div class="mr">Bước lunge về trước</div></div>
-      <div class="mi"><div class="et"><div class="mn">Chin tuck + upper trap stretch</div><div class="es">15s/bên</div></div><div class="mr">Giảm tension cổ vai gáy ngay</div></div>
+    <div class="set-row-s">
+      <div class="set-label">Tổng số session</div>
+      <div style="color:var(--t2);font-size:.85rem" id="total-sessions">0</div>
     </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Pre-Tennis Warm-up</h3><div class="du">8' trước T3/T6</div></div>
-      <div class="mi"><div class="et"><div class="mn">Light jog + high knees</div><div class="es">2 phút</div></div></div>
-      <div class="mi"><div class="et"><div class="mn">Lateral shuffle + carioca</div><div class="es">2×20m</div></div><div class="mr">Kích hoạt lateral movement</div><div class="ea"><a class="vb" href="https://www.youtube.com/results?search_query=carioca+drill+footwork+warm+up" target="_blank" rel="noopener"><svg class="yi" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>Video</a></div></div>
-      <div class="mi"><div class="et"><div class="mn">Leg swing (trước/sau + ngang)</div><div class="es">10/bên</div></div></div>
-      <div class="mi"><div class="et"><div class="mn">Arm circles + torso rotation</div><div class="es">10/hướng</div></div></div>
-      <div class="mi"><div class="et"><div class="mn">Split-step practice</div><div class="es">10 reps</div></div><div class="mr">Timing trước khi đối thủ đánh</div></div>
-    </div>
-
-    <div class="bk">
-      <div class="bh"><h3>Post-Tennis Cool-down</h3><div class="du">5' sau T3/T6</div></div>
-      <div class="mi"><div class="et"><div class="mn">Wrist flexor/extensor stretch</div><div class="es">20s/hướng</div></div><div class="mr">Phòng tennis elbow</div></div>
-      <div class="mi"><div class="et"><div class="mn">Standing quad stretch</div><div class="es">30s/bên</div></div></div>
-      <div class="mi"><div class="et"><div class="mn">Cross-body shoulder stretch</div><div class="es">30s/bên</div></div></div>
-      <div class="mi"><div class="et"><div class="mn">Standing calf stretch</div><div class="es">30s/bên</div></div></div>
-      <div class="mi"><div class="et"><div class="mn">Deep breathing + forward fold</div><div class="es">60s</div></div><div class="mr">Hạ nhịp tim</div></div>
-    </div>
-
   </div>
-</details>
+</div>
 
-<div class="gap"></div>
-
-<!-- ══ NOTES ══ -->
-<details id="s-notes">
-  <summary>
-    <div><div class="ti">Ghi chú & Progression</div><div class="si">Sleep · Auto-regulation · Body comp</div></div>
-    <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-  </summary>
-  <div class="dc" style="padding:8px 0">
-    <div class="no w"><strong>Sleep — Bottleneck lớn nhất</strong>WHOOP: trung bình 6.84h, thiếu ~15-20' so với 7h. Với 5 buổi/tuần → recovery kém → performance giảm + risk chấn thương. Mục tiêu: 7-7.5h.</div>
-    <div class="no"><strong>Progression Gym A (3-4 tuần)</strong>Trap bar DL: +2.5kg. Bulgarian SS: reps 6→8 trước, rồi tăng weight. Agility: tăng complexity, không tăng volume.</div>
-    <div class="no"><strong>Progression Gym B</strong>Med ball: 3→4→5kg. Strength: reps 8→10→12, reset weight. Face pull + Pallof: giữ nguyên.</div>
-    <div class="no"><strong>Auto-regulation (WHOOP)</strong>RHR +3 BPM × 3 ngày → giảm gym 70% hoặc mobility. Recovery &lt;33% → skip agility, strength RPE 6-7.</div>
-    <div class="no"><strong>Body composition</strong>66kg/1m70 lý tưởng cho tennis. Không bulk — giữ lean mass, shift sang power-to-weight + reactive strength.</div>
+<!-- ═══════ REST TIMER OVERLAY ═══════ -->
+<div class="rest-overlay" id="rest">
+  <div class="rest-time" id="rest-time">2:00</div>
+  <div class="rest-info">
+    <div style="font-weight:700">Nghỉ giữa set</div>
+    <div id="rest-info-sub">Trap bar deadlift · Set 2</div>
   </div>
-</details>
+  <button class="rest-btn" onclick="addRest(30)">+30s</button>
+  <button class="rest-btn" onclick="skipRest()">Skip</button>
+</div>
 
-<!-- Bottom nav -->
-<nav class="qn">
-  <a class="nb" href="#s-week">Lịch</a>
-  <a class="nb" href="#s-gyma">Gym A</a>
-  <a class="nb" href="#s-gymb">Gym B</a>
-  <a class="nb" href="#s-mobility">Mobility</a>
-  <a class="nb" href="#s-daily">Daily</a>
-  <a class="nb" href="#s-notes">Notes</a>
+<!-- ═══════ TAB BAR ═══════ -->
+<nav class="tabs">
+  <button class="tab active" data-view="home" onclick="switchView('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </button>
+  <button class="tab" data-view="history" onclick="switchView('history')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    History
+  </button>
+  <button class="tab" data-view="settings" onclick="switchView('settings')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Cài đặt
+  </button>
 </nav>
 
-<div class="foot">Huy Lâm · May 2026 · WHOOP data</div>
+<script>
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+const STORAGE_KEY = 'tennis-app-v1';
+let plan = null;
+let exercises = null;
+let activeSession = null; // {id, sessionType, date, startTime, exercises:{}}
+let restTimer = null;
+let restEndTime = 0;
 
+const VI_DAYS = ['CN','T2','T3','T4','T5','T6','T7'];
+const VI_DAYS_FULL = ['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'];
+const COLOR_TAGS = {gym:'t-gym',tennis:'t-tennis',pickle:'t-pickle',mob:'t-mob',rest:'t-rest'};
+
+// ═══════════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════════
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {sessions:[]};
+  } catch(e) { return {sessions:[]}; }
+}
+function saveStore(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+function getStore() { return loadStore(); }
+
+// ═══════════════════════════════════════════
+// LOAD DATA
+// ═══════════════════════════════════════════
+async function loadData() {
+  try {
+    const [planRes, exRes] = await Promise.all([
+      fetch('data/plan.json'),
+      fetch('data/exercises.json')
+    ]);
+    plan = await planRes.json();
+    exercises = await exRes.json();
+    renderHome();
+  } catch(e) {
+    document.getElementById('home-content').innerHTML =
+      '<div class="empty-state"><h3>Lỗi tải dữ liệu</h3><p>'+e.message+'</p></div>';
+  }
+}
+
+// ═══════════════════════════════════════════
+// HOME VIEW
+// ═══════════════════════════════════════════
+function renderHome() {
+  const today = new Date();
+  const dayNum = today.getDay() || 7; // 1-7 (Mon-Sun)
+  const dayKey = String(dayNum);
+  const todaySessionId = plan.schedule[dayKey];
+  const todaySession = plan.sessions[todaySessionId];
+
+  const dateStr = today.toLocaleDateString('vi-VN',{day:'numeric',month:'long',year:'numeric'});
+  const dayName = VI_DAYS_FULL[today.getDay()];
+
+  let html = '';
+
+  // Today card
+  if (todaySession.isExternal) {
+    html += `
+      <div class="today-card">
+        <div class="today-date">${dayName} · ${dateStr}</div>
+        <div class="today-label">${todaySession.label}</div>
+        <div class="today-sub">${todaySession.subtitle}</div>
+      </div>`;
+  } else {
+    html += `
+      <div class="today-card">
+        <div class="today-date">${dayName} · ${dateStr}</div>
+        <div class="today-label">${todaySession.label}</div>
+        <div class="today-sub">${todaySession.duration} phút · ${todaySession.subtitle}</div>
+        <button class="start-btn" onclick="startSession('${todaySessionId}')">▶ Bắt đầu buổi tập</button>
+      </div>`;
+  }
+
+  // Switch options
+  html += '<div class="switch-row"><div class="lbl">Hoặc tập buổi khác</div><div class="switch-grid">';
+  Object.entries(plan.sessions).forEach(([id,ses]) => {
+    if (ses.isExternal || id === todaySessionId) return;
+    html += `<button class="switch-btn" onclick="startSession('${id}')">${ses.label.split('—')[0].trim()}</button>`;
+  });
+  html += '</div></div>';
+
+  // Week schedule
+  html += '<div class="week-head">Lịch tuần</div><div class="week-list">';
+  const completedToday = checkCompletedToday();
+  for (let d = 1; d <= 7; d++) {
+    const sId = plan.schedule[String(d)];
+    const s = plan.sessions[sId];
+    const isToday = d === dayNum;
+    const isDone = completedToday[d];
+    html += `
+      <div class="dr ${isToday?'today':''}">
+        <div class="dl">${VI_DAYS[d===7?0:d]}</div>
+        <span class="tag ${COLOR_TAGS[s.color]}">${s.label.split('—')[0].trim()}</span>
+        <div class="di">${isDone?'<span class="check">✓</span> Done':(s.subtitle||'')}</div>
+      </div>`;
+  }
+  html += '</div>';
+
+  document.getElementById('home-content').innerHTML = html;
+}
+
+function checkCompletedToday() {
+  const todayStr = new Date().toISOString().split('T')[0];
+  const monday = new Date();
+  const dow = monday.getDay() || 7;
+  monday.setDate(monday.getDate() - (dow - 1));
+  monday.setHours(0,0,0,0);
+
+  const store = getStore();
+  const result = {};
+  store.sessions.forEach(s => {
+    const sDate = new Date(s.date);
+    if (sDate >= monday && s.completed) {
+      const sDow = sDate.getDay() || 7;
+      result[sDow] = true;
+    }
+  });
+  return result;
+}
+
+// ═══════════════════════════════════════════
+// SESSION VIEW
+// ═══════════════════════════════════════════
+function startSession(sessionId) {
+  const session = plan.sessions[sessionId];
+  if (!session || session.isExternal) return;
+
+  // Get last session of same type for pre-fill
+  const store = getStore();
+  const prevSession = [...store.sessions].reverse().find(s => s.type === sessionId && s.completed);
+
+  activeSession = {
+    id: 'ses-' + Date.now(),
+    type: sessionId,
+    date: new Date().toISOString(),
+    startTime: Date.now(),
+    exercises: {},
+    completed: false,
+    note: ''
+  };
+
+  // Pre-fill from previous
+  session.blocks.forEach(block => {
+    block.exercises.forEach(exId => {
+      const ex = exercises[exId];
+      const prev = prevSession?.exercises[exId];
+      activeSession.exercises[exId] = createEmptyLog(ex, prev);
+    });
+  });
+
+  switchView('session');
+  renderSession();
+}
+
+function createEmptyLog(ex, prev) {
+  const log = {type:ex.type, sets:[], note:''};
+
+  if (ex.type === 'strength') {
+    for (let i = 0; i < ex.sets; i++) {
+      const p = prev?.sets[i];
+      log.sets.push({weight:p?.weight||'', reps:p?.reps||ex.targetReps||'', rpe:p?.rpe||'', done:false});
+    }
+  } else if (ex.type === 'reps') {
+    for (let i = 0; i < ex.sets; i++) {
+      const p = prev?.sets[i];
+      log.sets.push({reps:p?.reps||ex.targetReps||'', done:false});
+    }
+  } else if (ex.type === 'time') {
+    for (let i = 0; i < ex.sets; i++) {
+      const p = prev?.sets[i];
+      log.sets.push({seconds:p?.seconds||ex.defaultSeconds||30, done:false});
+    }
+  } else {
+    // drill or stretch — single done flag
+    log.done = false;
+  }
+  return log;
+}
+
+function renderSession() {
+  const session = plan.sessions[activeSession.type];
+  document.getElementById('ses-title').textContent = session.label;
+
+  const elapsedMin = Math.floor((Date.now() - activeSession.startTime) / 60000);
+  const totalEx = countExercises(session);
+  const doneEx = countDoneExercises();
+  document.getElementById('ses-meta').textContent =
+    `${doneEx}/${totalEx} bài · ${elapsedMin} phút`;
+
+  let html = '';
+  session.blocks.forEach((block, bIdx) => {
+    html += `
+      <div class="block">
+        <div class="bh"><h3>${block.name}</h3><div class="du">${block.duration}'</div></div>`;
+    block.exercises.forEach(exId => {
+      html += renderExercise(exId);
+    });
+    html += '</div>';
+  });
+
+  // Session note
+  html += `
+    <div class="block">
+      <div class="bh"><h3>Ghi chú buổi tập</h3></div>
+      <div style="padding:14px 16px">
+        <textarea class="note-in" rows="3" placeholder="Cảm nhận, đau, năng lượng..." onchange="saveSessionNote(this.value)">${activeSession.note||''}</textarea>
+      </div>
+    </div>`;
+
+  document.getElementById('ses-content').innerHTML = html;
+}
+
+function renderExercise(exId) {
+  const ex = exercises[exId];
+  const log = activeSession.exercises[exId];
+  const store = getStore();
+  const prevSession = [...store.sessions].reverse().find(s => s.type === activeSession.type && s.completed && s.exercises[exId]);
+  const prev = prevSession?.exercises[exId];
+
+  const isDone = isExerciseDone(log);
+  let html = `<div class="ex ${isDone?'done':''}" id="ex-${exId}">
+    <div class="ex-top">
+      <div>
+        <div class="ex-name">${ex.name}</div>
+        <div class="ex-note">${ex.note||''}</div>
+      </div>
+      <div class="ex-rx">${ex.prescription}</div>
+    </div>`;
+
+  // "Last session" hint
+  if (prev) {
+    const ago = daysAgo(prevSession.date);
+    html += `<div class="ex-last">Last: ${formatPrev(prev, ex.type)} · <b>${ago}</b></div>`;
+  }
+
+  // Render input by type
+  if (ex.type === 'strength') {
+    html += '<div class="sets">';
+    log.sets.forEach((s, i) => {
+      html += `
+        <div class="set-row ${s.done?'done':''}" id="set-${exId}-${i}">
+          <div class="set-num">Set ${i+1}</div>
+          <input class="set-input" type="number" step="0.5" inputmode="decimal" placeholder="kg" value="${s.weight||''}" onchange="updateSet('${exId}',${i},'weight',this.value)" ${s.done?'disabled':''}>
+          <span class="set-x">×</span>
+          <input class="set-input" type="number" inputmode="numeric" placeholder="reps" value="${s.reps||''}" onchange="updateSet('${exId}',${i},'reps',this.value)" ${s.done?'disabled':''}>
+          <input class="set-input rpe" type="number" inputmode="numeric" placeholder="RPE" value="${s.rpe||''}" onchange="updateSet('${exId}',${i},'rpe',this.value)" ${s.done?'disabled':''}>
+          <button class="set-tick" onclick="toggleSetDone('${exId}',${i})">${s.done?'✓':''}</button>
+        </div>`;
+    });
+    html += '</div>';
+  } else if (ex.type === 'reps') {
+    html += '<div class="sets">';
+    log.sets.forEach((s, i) => {
+      html += `
+        <div class="set-row ${s.done?'done':''}">
+          <div class="set-num">Set ${i+1}</div>
+          <input class="set-input" type="number" inputmode="numeric" placeholder="reps" value="${s.reps||''}" onchange="updateSet('${exId}',${i},'reps',this.value)" ${s.done?'disabled':''}>
+          <span class="set-x">reps</span>
+          <button class="set-tick" onclick="toggleSetDone('${exId}',${i})">${s.done?'✓':''}</button>
+        </div>`;
+    });
+    html += '</div>';
+  } else if (ex.type === 'time') {
+    html += '<div class="sets">';
+    log.sets.forEach((s, i) => {
+      html += `
+        <div class="set-row ${s.done?'done':''}">
+          <div class="set-num">Set ${i+1}</div>
+          <input class="set-input set-time" type="number" inputmode="numeric" placeholder="sec" value="${s.seconds||''}" onchange="updateSet('${exId}',${i},'seconds',this.value)" ${s.done?'disabled':''}>
+          <span class="set-x">giây</span>
+          <button class="set-tick" onclick="toggleSetDone('${exId}',${i})">${s.done?'✓':''}</button>
+        </div>`;
+    });
+    html += '</div>';
+  } else {
+    // drill or stretch — single checkbox
+    html += `
+      <div class="check-row">
+        <button class="check-btn ${log.done?'done':''}" onclick="toggleDone('${exId}')">
+          <span class="ic">${log.done?'✓':''}</span>
+          ${log.done?'Đã hoàn thành':'Đánh dấu hoàn thành'}
+        </button>
+      </div>`;
+  }
+
+  // Actions
+  html += '<div class="ex-actions">';
+  if (ex.video) {
+    html += `<a class="vb" href="https://www.youtube.com/results?search_query=${ex.video}" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19a2.51 2.51 0 00-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 002.42 7.19 26.04 26.04 0 002 12c0 1.69.14 3.32.42 4.81a2.51 2.51 0 001.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 001.77-1.77c.28-1.49.42-3.12.42-4.81s-.14-3.32-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>
+      Video</a>`;
+  }
+  html += `<button class="nb" onclick="toggleNoteField('${exId}')">📝 Ghi chú</button>`;
+  html += '</div>';
+
+  // Note field (collapsed by default)
+  if (log.note || log._showNote) {
+    html += `<textarea class="note-in" rows="2" placeholder="Ghi chú..." onchange="updateExNote('${exId}',this.value)">${log.note||''}</textarea>`;
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function formatPrev(prev, type) {
+  if (type === 'strength') {
+    const w = prev.sets.map(s => s.weight).filter(x => x).slice(0,1)[0];
+    const reps = prev.sets.map(s => s.reps).join(',');
+    const rpes = prev.sets.map(s => s.rpe).filter(x=>x).join(',');
+    return `${w||'?'}kg × ${reps}${rpes?` @ RPE ${rpes}`:''}`;
+  } else if (type === 'reps') {
+    return prev.sets.map(s => s.reps).join(',') + ' reps';
+  } else if (type === 'time') {
+    return prev.sets.map(s => s.seconds + 's').join(', ');
+  }
+  return prev.done ? '✓ done' : '—';
+}
+
+function daysAgo(dateStr) {
+  const ms = Date.now() - new Date(dateStr).getTime();
+  const days = Math.floor(ms / 86400000);
+  if (days === 0) return 'hôm nay';
+  if (days === 1) return 'hôm qua';
+  if (days < 7) return `${days} ngày trước`;
+  return `${Math.floor(days/7)} tuần trước`;
+}
+
+function countExercises(session) {
+  return session.blocks.reduce((sum, b) => sum + b.exercises.length, 0);
+}
+function countDoneExercises() {
+  return Object.values(activeSession.exercises).filter(isExerciseDone).length;
+}
+function isExerciseDone(log) {
+  if (log.type === 'drill' || log.type === 'stretch') return log.done;
+  return log.sets && log.sets.length > 0 && log.sets.every(s => s.done);
+}
+
+// ═══════════════════════════════════════════
+// SET ACTIONS
+// ═══════════════════════════════════════════
+function updateSet(exId, setIdx, field, value) {
+  activeSession.exercises[exId].sets[setIdx][field] = value === '' ? '' : (field === 'weight' ? parseFloat(value) : parseInt(value));
+  persistActive();
+}
+
+function toggleSetDone(exId, setIdx) {
+  const set = activeSession.exercises[exId].sets[setIdx];
+  set.done = !set.done;
+  persistActive();
+  renderSession();
+
+  if (set.done) {
+    const ex = exercises[exId];
+    if (ex.rest > 0) startRest(ex.rest, ex.name, setIdx + 1);
+  }
+}
+
+function toggleDone(exId) {
+  const log = activeSession.exercises[exId];
+  log.done = !log.done;
+  persistActive();
+  renderSession();
+}
+
+function toggleNoteField(exId) {
+  activeSession.exercises[exId]._showNote = !activeSession.exercises[exId]._showNote;
+  renderSession();
+}
+
+function updateExNote(exId, val) {
+  activeSession.exercises[exId].note = val;
+  persistActive();
+}
+
+function saveSessionNote(val) {
+  activeSession.note = val;
+  persistActive();
+}
+
+function persistActive() {
+  // Save active session in progress to localStorage as draft
+  const store = getStore();
+  store.activeSession = activeSession;
+  saveStore(store);
+}
+
+// ═══════════════════════════════════════════
+// REST TIMER
+// ═══════════════════════════════════════════
+function startRest(seconds, exName, setNum) {
+  if (restTimer) clearInterval(restTimer);
+  restEndTime = Date.now() + seconds * 1000;
+  document.getElementById('rest-info-sub').textContent = `${exName} · Set ${setNum}`;
+  document.getElementById('rest').classList.add('show');
+  updateRestDisplay();
+  restTimer = setInterval(updateRestDisplay, 250);
+}
+
+function updateRestDisplay() {
+  const remain = Math.max(0, Math.ceil((restEndTime - Date.now()) / 1000));
+  const m = Math.floor(remain / 60);
+  const s = remain % 60;
+  document.getElementById('rest-time').textContent = `${m}:${s<10?'0':''}${s}`;
+
+  if (remain === 0) {
+    clearInterval(restTimer);
+    restTimer = null;
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+    setTimeout(skipRest, 1500);
+  }
+}
+
+function addRest(secs) {
+  restEndTime += secs * 1000;
+  updateRestDisplay();
+}
+
+function skipRest() {
+  if (restTimer) clearInterval(restTimer);
+  restTimer = null;
+  document.getElementById('rest').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════
+// FINISH SESSION
+// ═══════════════════════════════════════════
+function finishSession() {
+  if (!activeSession) return;
+  const doneCount = countDoneExercises();
+  const total = countExercises(plan.sessions[activeSession.type]);
+
+  if (doneCount === 0) {
+    if (!confirm('Chưa hoàn thành bài nào. Vẫn kết thúc?')) return;
+  }
+
+  activeSession.completed = true;
+  activeSession.endTime = Date.now();
+  activeSession.duration = Math.round((activeSession.endTime - activeSession.startTime) / 60000);
+
+  const store = getStore();
+  store.sessions.push(activeSession);
+  delete store.activeSession;
+  saveStore(store);
+
+  showToast(`Đã lưu! ${doneCount}/${total} bài · ${activeSession.duration} phút`);
+  activeSession = null;
+  switchView('home');
+  renderHome();
+}
+
+function exitSession() {
+  if (!activeSession) { switchView('home'); return; }
+  if (confirm('Thoát session? Tiến độ sẽ được lưu lại để tiếp tục sau.')) {
+    persistActive();
+    switchView('home');
+  }
+}
+
+// ═══════════════════════════════════════════
+// VIEW SWITCHING
+// ═══════════════════════════════════════════
+function switchView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === name));
+  if (name === 'home') renderHome();
+  if (name === 'history') renderHistory();
+  if (name === 'settings') renderSettings();
+  window.scrollTo(0, 0);
+}
+
+// ═══════════════════════════════════════════
+// HISTORY
+// ═══════════════════════════════════════════
+function renderHistory() {
+  const store = getStore();
+  const sessions = [...store.sessions].filter(s => s.completed).reverse();
+
+  if (sessions.length === 0) {
+    document.getElementById('history-content').innerHTML =
+      '<div class="empty-state"><h3>Chưa có session nào</h3><p>Hoàn thành buổi tập đầu tiên để xem lịch sử ở đây.</p></div>';
+    return;
+  }
+
+  let html = '';
+  sessions.forEach(s => {
+    const session = plan.sessions[s.type];
+    if (!session) return;
+    const date = new Date(s.date);
+    const dateStr = date.toLocaleDateString('vi-VN',{weekday:'long',day:'numeric',month:'numeric'});
+    const exDone = Object.values(s.exercises).filter(isExerciseDone).length;
+    const exTotal = Object.keys(s.exercises).length;
+    html += `
+      <div class="ses-card">
+        <div class="ses-card-top">
+          <div class="ses-card-title">${session.label}</div>
+          <div class="ses-card-date">${dateStr}</div>
+        </div>
+        <div class="ses-card-stats"><b>${exDone}/${exTotal}</b> bài · <b>${s.duration||'?'}</b> phút${s.note?' · 📝':''}</div>
+      </div>`;
+  });
+  document.getElementById('history-content').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════════
+function renderSettings() {
+  const store = getStore();
+  const count = (store.sessions || []).filter(s => s.completed).length;
+  document.getElementById('total-sessions').textContent = count;
+}
+
+function exportData() {
+  const store = getStore();
+  const blob = new Blob([JSON.stringify(store, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `tennis-data-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Đã export!');
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.sessions) throw new Error('Invalid format');
+      if (!confirm(`Import ${data.sessions.length} sessions? Sẽ ghi đè data hiện tại.`)) return;
+      saveStore(data);
+      showToast('Đã import!');
+      renderSettings();
+    } catch(err) {
+      alert('Lỗi: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function clearHistory() {
+  if (!confirm('Xóa toàn bộ history? Không thể hoàn tác.')) return;
+  if (!confirm('Chắc chắn? Cân nhắc Export trước khi xóa.')) return;
+  saveStore({sessions:[]});
+  showToast('Đã xóa');
+  renderSettings();
+}
+
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+function showToast(msg) {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 1900);
+}
+
+// ═══════════════════════════════════════════
+// INIT — restore active session if exists
+// ═══════════════════════════════════════════
+async function init() {
+  await loadData();
+
+  const store = getStore();
+  if (store.activeSession && !store.activeSession.completed) {
+    if (confirm('Có session đang dở. Tiếp tục?')) {
+      activeSession = store.activeSession;
+      switchView('session');
+      renderSession();
+    } else {
+      delete store.activeSession;
+      saveStore(store);
+    }
+  }
+}
+
+init();
+</script>
 </body>
 </html>
