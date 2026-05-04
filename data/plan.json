@@ -1,5 +1,5 @@
 {
-  "_comment": "Weekly plan structure. dayOfWeek: 1=Monday, 7=Sunday. Each session has blocks, each block has list of exercise IDs from exercises.json. To swap an exercise, change its ID here. To add new session, add to sessions and update schedule.",
+  "_comment": "Weekly plan. dayOfWeek: 1=Mon, 7=Sun. Each session has blocks with exercise IDs from exercises.json.",
 
   "schedule": {
     "1": "gym-a",
@@ -14,7 +14,7 @@
   "sessions": {
     "gym-a": {
       "label": "Gym A — Lower + Agility",
-      "tag": "T2",
+      "tag": "MON",
       "color": "gym",
       "duration": 55,
       "subtitle": "Explosive + Footwork",
@@ -44,7 +44,7 @@
 
     "gym-b": {
       "label": "Gym B — Upper + Rotation",
-      "tag": "T5",
+      "tag": "THU",
       "color": "gym",
       "duration": 55,
       "subtitle": "Rotational power + Scapular",
@@ -74,23 +74,23 @@
 
     "mobility": {
       "label": "Mobility + Recovery",
-      "tag": "T4",
+      "tag": "WED",
       "color": "mob",
       "duration": 25,
-      "subtitle": "Cổ vai gáy + Hông + Cổ chân",
+      "subtitle": "Neck/shoulders + Hips + Ankles",
       "blocks": [
         {
-          "name": "Cổ — Vai — Gáy",
+          "name": "Neck — Shoulders",
           "duration": 10,
           "exercises": ["levator-scapulae-stretch", "upper-trap-stretch", "chin-tuck-rotation", "thread-the-needle", "foam-roll-upper-back"]
         },
         {
-          "name": "Hông + Háng",
+          "name": "Hips + Groin",
           "duration": 10,
           "exercises": ["hip-90-90", "worlds-greatest-stretch", "adductor-rock-back", "pigeon-stretch", "foam-roll-quads-it"]
         },
         {
-          "name": "Cổ chân + Bắp chân",
+          "name": "Ankles + Calves",
           "duration": 5,
           "exercises": ["wall-ankle-dorsiflexion", "calf-stretch"]
         }
@@ -102,7 +102,7 @@
       "tag": "AM",
       "color": "mob",
       "duration": 5,
-      "subtitle": "Mỗi sáng",
+      "subtitle": "Every morning",
       "blocks": [
         {
           "name": "Morning",
@@ -117,7 +117,7 @@
       "tag": "DESK",
       "color": "mob",
       "duration": 3,
-      "subtitle": "Mỗi 2h ngồi",
+      "subtitle": "Every 2h sitting",
       "blocks": [
         {
           "name": "Desk Break",
@@ -132,7 +132,7 @@
       "tag": "PRE",
       "color": "tennis",
       "duration": 8,
-      "subtitle": "Trước T3/T6",
+      "subtitle": "Before tennis sessions",
       "blocks": [
         {
           "name": "Warm-up",
@@ -147,7 +147,7 @@
       "tag": "POST",
       "color": "tennis",
       "duration": 5,
-      "subtitle": "Sau T3/T6",
+      "subtitle": "After tennis sessions",
       "blocks": [
         {
           "name": "Cool-down",
@@ -159,20 +159,20 @@
 
     "tennis": {
       "label": "Tennis Singles",
-      "tag": "TN",
+      "tag": "TUE",
       "color": "tennis",
       "duration": 90,
-      "subtitle": "Tối cố định",
+      "subtitle": "Evening · Fixed schedule",
       "isExternal": true,
       "blocks": []
     },
 
     "pickleball": {
       "label": "Pickleball",
-      "tag": "PB",
+      "tag": "SAT",
       "color": "pickle",
       "duration": 60,
-      "subtitle": "Chiều thứ 7",
+      "subtitle": "Saturday afternoon",
       "isExternal": true,
       "blocks": []
     },
@@ -182,7 +182,7 @@
       "tag": "OFF",
       "color": "rest",
       "duration": 0,
-      "subtitle": "Ngủ bù · Light stretch",
+      "subtitle": "Catch-up sleep · Light stretch",
       "isExternal": true,
       "blocks": []
     }
